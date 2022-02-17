@@ -1,0 +1,7 @@
+main: net.novauniverse.voidcraft.VoidCraft
+name: VoidCraft
+description: Plugin for VoidCraft
+version: 1.0
+api-version: 1.13
+
+depend: [NovaCore, Netherboard]
