@@ -27,9 +27,8 @@ public class VoidCraftManager extends NovaModule implements Listener {
 		VoidCraftManager.instance = this;
 	}
 
-	@Override
-	public String getName() {
-		return "voidcraft.voidcraftmanager";
+	public VoidCraftManager() {
+		super("VoidCraft.VoidCraftManager");
 	}
 
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)

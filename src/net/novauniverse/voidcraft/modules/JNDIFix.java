@@ -10,9 +10,8 @@ import net.zeeraa.novacore.commons.log.Log;
 import net.zeeraa.novacore.spigot.module.NovaModule;
 
 public class JNDIFix extends NovaModule implements Listener {
-	@Override
-	public String getName() {
-		return "devilsmp.JNDIFix";
+	public JNDIFix() {
+		super("VoidCraft.JNDIFix");
 	}
 
 	@EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = false)

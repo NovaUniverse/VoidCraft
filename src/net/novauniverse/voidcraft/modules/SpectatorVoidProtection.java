@@ -11,12 +11,11 @@ import net.zeeraa.novacore.spigot.tasks.SimpleTask;
 
 public class SpectatorVoidProtection extends NovaModule {
 	private Task task;
-	
-	@Override
-	public String getName() {
-		return "voidcraft.spectatorvoidprotection";
+
+	public SpectatorVoidProtection() {
+		super("VoidCraft.SpectatorVoidProtection");
 	}
-	
+
 	@Override
 	public void onLoad() {
 		task = new SimpleTask(VoidCraft.getInstance(), new Runnable() {
@@ -35,7 +34,7 @@ public class SpectatorVoidProtection extends NovaModule {
 			}
 		}, 10L);
 	}
-	
+
 	@Override
 	public void onEnable() throws Exception {
 		Task.tryStartTask(task);

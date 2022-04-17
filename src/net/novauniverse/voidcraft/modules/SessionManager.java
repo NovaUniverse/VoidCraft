@@ -30,9 +30,8 @@ public class SessionManager extends NovaModule {
 		this.timeLeft = timeLeft;
 	}
 
-	@Override
-	public String getName() {
-		return "voidcraft.sessionmanager";
+	public SessionManager() {
+		super("VoidCraft.SessionManager");
 	}
 
 	@Override

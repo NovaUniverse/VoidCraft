@@ -29,9 +29,8 @@ public class PlayerDataManager extends NovaModule implements Listener {
 
 			private List<PlayerData> playerData;
 
-			@Override
-			public String getName() {
-				return "voidcraft.playerdatamanager";
+			public PlayerDataManager() {
+				super("VoidCraft.PlayerDataManager");
 			}
 
 			@Override

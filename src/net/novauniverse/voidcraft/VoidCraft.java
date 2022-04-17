@@ -13,6 +13,7 @@ import net.novauniverse.voidcraft.command.voidcraft.VoidcraftCommand;
 import net.novauniverse.voidcraft.config.VoidCraftConfig;
 import net.novauniverse.voidcraft.customitems.VoidCraftLootBox;
 import net.novauniverse.voidcraft.modules.JNDIFix;
+import net.novauniverse.voidcraft.modules.SessionManager;
 import net.novauniverse.voidcraft.modules.SpectatorVoidProtection;
 import net.novauniverse.voidcraft.modules.VoidCraftManager;
 import net.novauniverse.voidcraft.playerdata.PlayerDataManager;
@@ -60,10 +61,11 @@ public class VoidCraft extends JavaPlugin {
 			return;
 		}
 
-		ModuleManager.loadModule(PlayerDataManager.class, true);
-		ModuleManager.loadModule(SpectatorVoidProtection.class, true);
-		ModuleManager.loadModule(VoidCraftManager.class, true);
-		ModuleManager.loadModule(JNDIFix.class, true);
+		ModuleManager.loadModule(this, PlayerDataManager.class, true);
+		ModuleManager.loadModule(this, SessionManager.class, true);
+		ModuleManager.loadModule(this, SpectatorVoidProtection.class, true);
+		ModuleManager.loadModule(this, VoidCraftManager.class, true);
+		ModuleManager.loadModule(this, JNDIFix.class, true);
 
 		CommandRegistry.registerCommand(new TransferLifeCommand());
 		CommandRegistry.registerCommand(new VoidcraftCommand());
