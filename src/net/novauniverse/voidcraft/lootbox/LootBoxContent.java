@@ -14,7 +14,7 @@ public class LootBoxContent {
 	public static List<ItemStack> getLootBoxContent() {
 		return LOOTBOX_CONTENT;
 	}
-	
+
 	static {
 		LOOTBOX_CONTENT.add(new ItemBuilder(Material.SAND).setAmount(64).build());
 		LOOTBOX_CONTENT.add(new ItemBuilder(Material.DIAMOND).setAmount(5).build());

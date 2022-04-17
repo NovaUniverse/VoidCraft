@@ -8,11 +8,11 @@ public class VoidCraftConfig {
 	public VoidCraftConfig(FileConfiguration config) {
 		this.config = config;
 	}
-	
+
 	public boolean shouldMessagePlayer() {
 		return config.getBoolean("message_player");
 	}
-	
+
 	public boolean isRedProtection() {
 		return config.getBoolean("protect_red_players");
 	}

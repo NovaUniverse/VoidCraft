@@ -24,7 +24,7 @@ public class PlayerData {
 	public int getLives() {
 		return lives;
 	}
-	
+
 	public void setLives(int lives) {
 		this.lives = lives;
 	}
@@ -32,11 +32,15 @@ public class PlayerData {
 	public boolean isProtected() {
 		return protection;
 	}
-	
+
 	public void setProtected(boolean protection) {
 		this.protection = protection;
 	}
-	
+
+	public boolean isRed() {
+		return this.lives == 1;
+	}
+
 	public void save() {
 		PlayerDataManager.getInstance().savePlayerData(this);
 	}

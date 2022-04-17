@@ -21,99 +21,99 @@ import net.zeeraa.novacore.commons.utils.UUIDUtils;
 import net.zeeraa.novacore.spigot.module.NovaModule;
 
 public class PlayerDataManager extends NovaModule implements Listener {
-			private static PlayerDataManager instance;
+	private static PlayerDataManager instance;
 
-			public static PlayerDataManager getInstance() {
-				return instance;
-			}
+	public static PlayerDataManager getInstance() {
+		return instance;
+	}
 
-			private List<PlayerData> playerData;
+	private List<PlayerData> playerData;
 
-			public PlayerDataManager() {
-				super("VoidCraft.PlayerDataManager");
-			}
+	public PlayerDataManager() {
+		super("VoidCraft.PlayerDataManager");
+	}
 
-			@Override
-			public void onLoad() {
-				PlayerDataManager.instance = this;
-				playerData = new ArrayList<>();
-			}
+	@Override
+	public void onLoad() {
+		PlayerDataManager.instance = this;
+		playerData = new ArrayList<>();
+	}
 
-			@Override
-			public void onEnable() throws Exception {
-				playerData.clear();
-				Bukkit.getServer().getOnlinePlayers().forEach(player -> this.getData(player));
-			}
+	@Override
+	public void onEnable() throws Exception {
+		playerData.clear();
+		Bukkit.getServer().getOnlinePlayers().forEach(player -> this.getData(player));
+	}
 
-			@Override
-			public void onDisable() throws Exception {
-				playerData.forEach(data -> data.save());
-				playerData.clear();
-			}
+	@Override
+	public void onDisable() throws Exception {
+		playerData.forEach(data -> data.save());
+		playerData.clear();
+	}
 
-			public PlayerData getData(Player player) {
-				return this.getData(player.getUniqueId());
-			}
+	public PlayerData getData(Player player) {
+		return this.getData(player.getUniqueId());
+	}
 
-			public PlayerData getData(UUID uuid) {
-				for (PlayerData data : playerData) {
-					if (UUIDUtils.isSame(data.getUuid(), uuid)) {
-						return data;
-					}
-				}
-
-				File playerDataFile = this.getPlayerDataFile(uuid);
-				if (playerDataFile.exists()) {
-					try {
-						JSONObject json = JSONFileUtils.readJSONObjectFromFile(playerDataFile);
-
-						int lives = json.getInt("lives");
-						boolean protection = json.getBoolean("protected");
-
-						PlayerData data = new PlayerData(uuid, lives, protection);
-
-						playerData.add(data);
-
-						return data;
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-
-				return new PlayerData(uuid);
-			}
-
-			public File getPlayerDataFile(UUID uuid) {
-				return new File(VoidCraft.getInstance().getDataFolder().getAbsolutePath() + File.separator + "playerdata" + File.separator + uuid.toString() + ".json");
-			}
-
-			public boolean savePlayerData(PlayerData data) {
-				File dataFile = this.getPlayerDataFile(data.getUuid());
-
-				JSONObject json = new JSONObject();
-
-				json.put("uuid", data.getUuid().toString());
-				json.put("lives", data.getLives());
-				json.put("protected", data.isProtected());
-
-				try {
-					JSONFileUtils.saveJson(dataFile, json, 4);
-					return true;
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				return false;
-			}
-
-			@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-			public void onPlayerJoin(PlayerJoinEvent e) {
-				this.getData(e.getPlayer());
-			}
-
-			@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-			public void onPlayerQuit(PlayerQuitEvent e) {
-				PlayerData data = this.getData(e.getPlayer());
-				data.save();
-				playerData.remove(data);
+	public PlayerData getData(UUID uuid) {
+		for (PlayerData data : playerData) {
+			if (UUIDUtils.isSame(data.getUuid(), uuid)) {
+				return data;
 			}
 		}
+
+		File playerDataFile = this.getPlayerDataFile(uuid);
+		if (playerDataFile.exists()) {
+			try {
+				JSONObject json = JSONFileUtils.readJSONObjectFromFile(playerDataFile);
+
+				int lives = json.getInt("lives");
+				boolean protection = json.getBoolean("protected");
+
+				PlayerData data = new PlayerData(uuid, lives, protection);
+
+				playerData.add(data);
+
+				return data;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return new PlayerData(uuid);
+	}
+
+	public File getPlayerDataFile(UUID uuid) {
+		return new File(VoidCraft.getInstance().getDataFolder().getAbsolutePath() + File.separator + "playerdata" + File.separator + uuid.toString() + ".json");
+	}
+
+	public boolean savePlayerData(PlayerData data) {
+		File dataFile = this.getPlayerDataFile(data.getUuid());
+
+		JSONObject json = new JSONObject();
+
+		json.put("uuid", data.getUuid().toString());
+		json.put("lives", data.getLives());
+		json.put("protected", data.isProtected());
+
+		try {
+			JSONFileUtils.saveJson(dataFile, json, 4);
+			return true;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+	public void onPlayerJoin(PlayerJoinEvent e) {
+		this.getData(e.getPlayer());
+	}
+
+	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+	public void onPlayerQuit(PlayerQuitEvent e) {
+		PlayerData data = this.getData(e.getPlayer());
+		data.save();
+		playerData.remove(data);
+	}
+}

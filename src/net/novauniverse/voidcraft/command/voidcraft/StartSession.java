@@ -10,7 +10,7 @@ import net.zeeraa.novacore.spigot.command.NovaSubCommand;
 public class StartSession extends NovaSubCommand {
 	public StartSession() {
 		super("startsession");
-		
+
 		setAllowedSenders(AllowedSenders.ALL);
 
 		setPermissionDefaultValue(PermissionDefault.OP);
@@ -22,8 +22,8 @@ public class StartSession extends NovaSubCommand {
 
 	@Override
 	public boolean execute(CommandSender sender, String commandLabel, String[] args) {
-			SessionManager.getInstance().startSession();
-		
+		SessionManager.getInstance().startSession();
+
 		return true;
 	}
 }

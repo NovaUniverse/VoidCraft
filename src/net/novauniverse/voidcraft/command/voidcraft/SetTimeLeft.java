@@ -37,8 +37,8 @@ public class SetTimeLeft extends NovaSubCommand {
 			}
 
 			SessionManager.getInstance().setTimeLeft(timeLeft);
-			
-			sender.sendMessage(ChatColor.GREEN + "Time left set to "+ timeLeft);
+
+			sender.sendMessage(ChatColor.GREEN + "Time left set to " + timeLeft);
 		} catch (NumberFormatException e) {
 			sender.sendMessage(ChatColor.RED + "Please provide the time as a valid number");
 		}
