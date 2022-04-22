@@ -29,7 +29,7 @@ public class VoidTheifCommand extends NovaCommand {
 
 	@Override
 	public boolean execute(CommandSender sender, String commandLabel, String[] args) {
-		if (SessionManager.getInstance().getVoidthief() != null) {
+		if (SessionManager.getInstance().getVoidthief() == null) {
 			sender.sendMessage(ChatColor.RED + "No active voidtheif");
 		} else {
 			OfflinePlayer player = Bukkit.getServer().getOfflinePlayer(SessionManager.getInstance().getVoidthief());

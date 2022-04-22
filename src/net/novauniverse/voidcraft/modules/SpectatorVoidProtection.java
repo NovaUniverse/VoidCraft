@@ -25,8 +25,8 @@ public class SpectatorVoidProtection extends NovaModule {
 					if (player.getGameMode() == GameMode.SPECTATOR) {
 						Location location = player.getLocation();
 
-						if (location.getY() < 0) {
-							location.setY(0);
+						if (location.getY() < -70) {
+							location.setY(-64);
 							player.teleport(location);
 						}
 					}
@@ -42,6 +42,6 @@ public class SpectatorVoidProtection extends NovaModule {
 
 	@Override
 	public void onDisable() throws Exception {
-		Task.tryStartTask(task);
+		Task.tryStopTask(task);
 	}
 }

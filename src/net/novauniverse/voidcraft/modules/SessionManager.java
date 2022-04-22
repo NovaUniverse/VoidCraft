@@ -156,7 +156,7 @@ public class SessionManager extends NovaModule {
 
 	public void updateScoreboard() {
 		if (sessionActive) {
-			Log.trace("timeLeft: " + timeLeft);
+			//Log.trace("timeLeft: " + timeLeft);
 			NetherBoardScoreboard.getInstance().setGlobalLine(1, ChatColor.GOLD + "Time left: " + ChatColor.AQUA + TextUtils.formatTimeToHMS(timeLeft));
 		} else {
 			NetherBoardScoreboard.getInstance().setGlobalLine(1, ChatColor.RED + "Session not active");

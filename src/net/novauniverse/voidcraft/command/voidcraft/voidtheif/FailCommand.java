@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionDefault;
 
 import net.novauniverse.voidcraft.modules.SessionManager;
+import net.novauniverse.voidcraft.modules.VoidCraftManager;
 import net.novauniverse.voidcraft.playerdata.PlayerData;
 import net.novauniverse.voidcraft.playerdata.PlayerDataManager;
 import net.zeeraa.novacore.spigot.abstraction.VersionIndependantUtils;
@@ -44,6 +45,7 @@ public class FailCommand extends NovaSubCommand {
 					data.setLives(data.getLives() - 2);
 					data.save();
 				}
+				VoidCraftManager.getInstance().updatePlayer(player);
 				data.save();
 			}
 			SessionManager.getInstance().setVoidTheif(null);

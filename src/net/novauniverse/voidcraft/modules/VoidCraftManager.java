@@ -14,6 +14,7 @@ import net.novauniverse.voidcraft.VoidCraft;
 import net.novauniverse.voidcraft.misc.VoidCraftUtils;
 import net.novauniverse.voidcraft.playerdata.PlayerData;
 import net.novauniverse.voidcraft.playerdata.PlayerDataManager;
+import net.zeeraa.novacore.commons.log.Log;
 import net.zeeraa.novacore.commons.utils.UUIDUtils;
 import net.zeeraa.novacore.spigot.module.NovaModule;
 import net.zeeraa.novacore.spigot.module.modules.scoreboard.NetherBoardScoreboard;
@@ -84,36 +85,53 @@ public class VoidCraftManager extends NovaModule implements Listener {
 					PlayerData data = PlayerDataManager.getInstance().getData(player);
 					PlayerData attackerData = PlayerDataManager.getInstance().getData(attacker);
 
-					if (data.isRed() && !data.isProtected()) {
-						// Player is at 1 life and no protection. Allow attack
-						// edit: wait why the f**k did we add an empty if statement?
-					}
-
-					// Allow voidtheif to attack everyone
-					if (!UUIDUtils.isSame(attacker.getUniqueId(), SessionManager.getInstance().getVoidthief())) {
-						if (data.isRed() && data.isProtected()) {
-							// Player is at 1 life but has protection, attacker is not a red player. Block
-							// attack and message player
-							attacker.sendMessage(ChatColor.RED + "You cant attack that player since they have not yet attacked anyone");
-							e.setCancelled(true);
-						}
-
-						if (!attackerData.isRed() && !data.isRed()) {
-							// None of the players are red. Cancel attack
-							attacker.sendMessage(ChatColor.RED + "You cant attack friendly players");
-							e.setCancelled(true);
-						}
-					}
-
-					// Check if we should remove the protection of the attacker
-					if (!e.isCancelled()) {
-						if (attackerData.isRed() && attackerData.isProtected()) {
+					// Allow red to attach others
+					if (attackerData.isRed()) {
+						Log.trace("VoidCraftManager", "Allow attack. Attecker is red");
+						if (attackerData.isProtected()) {
 							attackerData.setProtected(false);
 							attackerData.save();
 							attacker.sendMessage(ChatColor.RED + "You lost your protection against other players since you attacked someone");
 							attacker.playSound(attacker, Sound.ENTITY_BAT_HURT, 1F, 0.5F);
 						}
+						return;
 					}
+
+					// Allow attacks involving void theif
+					if (SessionManager.getInstance().getVoidthief() != null) {
+						if (UUIDUtils.isSame(attacker.getUniqueId(), SessionManager.getInstance().getVoidthief())) {
+							Log.trace("VoidCraftManager", "Allow attack. Void theif attacking a player");
+							return;
+						}
+
+						if (UUIDUtils.isSame(player.getUniqueId(), SessionManager.getInstance().getVoidthief())) {
+							Log.trace("VoidCraftManager", "Allow attack. Void theif attcked by other");
+							return;
+						}
+					}
+
+					// Deny attacking red players with protection
+					if (data.isRed() && data.isProtected() && !attackerData.isRed()) {
+						Log.trace("VoidCraftManager", "Cancel attack. Player is red and no protection");
+						attacker.sendMessage(ChatColor.RED + "You cant attack that player since they have not yet attacked anyone");
+						e.setCancelled(true);
+						return;
+					}
+
+					// Allow attacking red players without protection
+					if (data.isRed() && !data.isProtected()) {
+						Log.trace("VoidCraftManager", "Allow attack. Target is red with no protection");
+						return;
+					}
+
+					if (!attackerData.isRed() && !data.isRed()) {
+						Log.trace("VoidCraftManager", "Deny attack. Niether player is red");
+						attacker.sendMessage(ChatColor.RED + "You cant attack friendly players");
+						e.setCancelled(true);
+						return;
+					}
+
+					Log.trace("VoidCraftManager", "Allow attack. Unknown attack state");
 				} else {
 					e.getDamager().sendMessage(ChatColor.RED + "Session is not active");
 					e.setCancelled(true);

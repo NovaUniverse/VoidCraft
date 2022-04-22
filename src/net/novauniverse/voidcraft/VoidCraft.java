@@ -48,7 +48,7 @@ public class VoidCraft extends JavaPlugin {
 
 		ModuleManager.require(NetherBoardScoreboard.class);
 		ModuleManager.require(CustomItemManager.class);
-
+		
 		int scoreboardLines = 2;
 		NetherBoardScoreboard.getInstance().setDefaultTitle(ChatColor.AQUA + "" + ChatColor.BOLD + "VoidCraft Season 2");
 		NetherBoardScoreboard.getInstance().setLineCount(scoreboardLines);
