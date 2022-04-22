@@ -9,6 +9,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import net.novauniverse.voidcraft.command.TransferLifeCommand;
+import net.novauniverse.voidcraft.command.voidcraft.Nothing;
 import net.novauniverse.voidcraft.command.voidcraft.VoidcraftCommand;
 import net.novauniverse.voidcraft.command.voidcraft.voidtheif.VoidTheifCommand;
 import net.novauniverse.voidcraft.config.VoidCraftConfig;
@@ -71,6 +72,7 @@ public class VoidCraft extends JavaPlugin {
 		CommandRegistry.registerCommand(new TransferLifeCommand());
 		CommandRegistry.registerCommand(new VoidcraftCommand());
 		CommandRegistry.registerCommand(new VoidTheifCommand());
+		CommandRegistry.registerCommand(new Nothing());
 	}
 
 	@Override

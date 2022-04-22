@@ -1,21 +1,21 @@
 package net.novauniverse.voidcraft.modules;
 
 import org.bukkit.ChatColor;
-import org.bukkit.Sound;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import net.novauniverse.voidcraft.VoidCraft;
 import net.novauniverse.voidcraft.misc.VoidCraftUtils;
 import net.novauniverse.voidcraft.playerdata.PlayerData;
 import net.novauniverse.voidcraft.playerdata.PlayerDataManager;
-import net.zeeraa.novacore.commons.log.Log;
-import net.zeeraa.novacore.commons.utils.UUIDUtils;
 import net.zeeraa.novacore.spigot.module.NovaModule;
 import net.zeeraa.novacore.spigot.module.modules.scoreboard.NetherBoardScoreboard;
 
@@ -40,8 +40,25 @@ public class VoidCraftManager extends NovaModule implements Listener {
 		this.updatePlayer(e.getPlayer());
 	}
 
+	@EventHandler(priority = EventPriority.HIGHEST)
+	public void onPlayerJoin(PlayerRespawnEvent e) {
+		PlayerData data = PlayerDataManager.getInstance().getData(e.getPlayer());
+		if (data.getLives() == 0) {
+			new BukkitRunnable() {
+				@Override
+				public void run() {
+					e.getPlayer().setGameMode(GameMode.SPECTATOR);
+				}
+			}.runTaskLater(VoidCraft.getInstance(), 1L);
+		}
+	}
+
 	@EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
 	public void onPlayerDeath(PlayerDeathEvent e) {
+		if (!SessionManager.getInstance().isSessionActive()) {
+			return;
+		}
+
 		Player player = e.getEntity();
 
 		PlayerData data = PlayerDataManager.getInstance().getData(player);
@@ -62,6 +79,7 @@ public class VoidCraftManager extends NovaModule implements Listener {
 
 			case 0:
 				player.sendMessage(ChatColor.GRAY + "You are now a spectator");
+				player.setGameMode(GameMode.SPECTATOR);
 				break;
 
 			default:
@@ -75,67 +93,10 @@ public class VoidCraftManager extends NovaModule implements Listener {
 	}
 
 	@EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
-	public void onEntityDamageByEntity(EntityDamageByEntityEvent e) {
-		if (e.getDamager() instanceof Player) {
-			if (e.getEntity() instanceof Player) {
-				if (SessionManager.getInstance().isSessionActive()) {
-					Player player = (Player) e.getEntity();
-					Player attacker = (Player) e.getDamager();
-
-					PlayerData data = PlayerDataManager.getInstance().getData(player);
-					PlayerData attackerData = PlayerDataManager.getInstance().getData(attacker);
-
-					// Allow red to attach others
-					if (attackerData.isRed()) {
-						Log.trace("VoidCraftManager", "Allow attack. Attecker is red");
-						if (attackerData.isProtected()) {
-							attackerData.setProtected(false);
-							attackerData.save();
-							attacker.sendMessage(ChatColor.RED + "You lost your protection against other players since you attacked someone");
-							attacker.playSound(attacker, Sound.ENTITY_BAT_HURT, 1F, 0.5F);
-						}
-						return;
-					}
-
-					// Allow attacks involving void theif
-					if (SessionManager.getInstance().getVoidthief() != null) {
-						if (UUIDUtils.isSame(attacker.getUniqueId(), SessionManager.getInstance().getVoidthief())) {
-							Log.trace("VoidCraftManager", "Allow attack. Void theif attacking a player");
-							return;
-						}
-
-						if (UUIDUtils.isSame(player.getUniqueId(), SessionManager.getInstance().getVoidthief())) {
-							Log.trace("VoidCraftManager", "Allow attack. Void theif attcked by other");
-							return;
-						}
-					}
-
-					// Deny attacking red players with protection
-					if (data.isRed() && data.isProtected() && !attackerData.isRed()) {
-						Log.trace("VoidCraftManager", "Cancel attack. Player is red and no protection");
-						attacker.sendMessage(ChatColor.RED + "You cant attack that player since they have not yet attacked anyone");
-						e.setCancelled(true);
-						return;
-					}
-
-					// Allow attacking red players without protection
-					if (data.isRed() && !data.isProtected()) {
-						Log.trace("VoidCraftManager", "Allow attack. Target is red with no protection");
-						return;
-					}
-
-					if (!attackerData.isRed() && !data.isRed()) {
-						Log.trace("VoidCraftManager", "Deny attack. Niether player is red");
-						attacker.sendMessage(ChatColor.RED + "You cant attack friendly players");
-						e.setCancelled(true);
-						return;
-					}
-
-					Log.trace("VoidCraftManager", "Allow attack. Unknown attack state");
-				} else {
-					e.getDamager().sendMessage(ChatColor.RED + "Session is not active");
-					e.setCancelled(true);
-				}
+	public void onEntityDamage(EntityDamageEvent e) {
+		if (e.getEntity() instanceof Player) {
+			if (!SessionManager.getInstance().isSessionActive()) {
+				e.setCancelled(true);
 			}
 		}
 	}

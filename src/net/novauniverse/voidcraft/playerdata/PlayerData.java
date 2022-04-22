@@ -5,16 +5,14 @@ import java.util.UUID;
 public class PlayerData {
 	private UUID uuid;
 	private int lives;
-	private boolean protection;
 
 	public PlayerData(UUID uuid) {
-		this(uuid, 5, true);
+		this(uuid, 5);
 	}
 
-	public PlayerData(UUID uuid, int lives, boolean protection) {
+	public PlayerData(UUID uuid, int lives) {
 		this.uuid = uuid;
 		this.lives = lives;
-		this.protection = protection;
 	}
 
 	public UUID getUuid() {
@@ -27,14 +25,6 @@ public class PlayerData {
 
 	public void setLives(int lives) {
 		this.lives = lives;
-	}
-
-	public boolean isProtected() {
-		return protection;
-	}
-
-	public void setProtected(boolean protection) {
-		this.protection = protection;
 	}
 
 	public boolean isRed() {

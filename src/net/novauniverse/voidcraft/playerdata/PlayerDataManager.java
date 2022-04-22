@@ -68,9 +68,8 @@ public class PlayerDataManager extends NovaModule implements Listener {
 				JSONObject json = JSONFileUtils.readJSONObjectFromFile(playerDataFile);
 
 				int lives = json.getInt("lives");
-				boolean protection = json.getBoolean("protected");
 
-				PlayerData data = new PlayerData(uuid, lives, protection);
+				PlayerData data = new PlayerData(uuid, lives);
 
 				playerData.add(data);
 
@@ -94,7 +93,6 @@ public class PlayerDataManager extends NovaModule implements Listener {
 
 		json.put("uuid", data.getUuid().toString());
 		json.put("lives", data.getLives());
-		json.put("protected", data.isProtected());
 
 		try {
 			JSONFileUtils.saveJson(dataFile, json, 4);

@@ -2,6 +2,7 @@ package net.novauniverse.voidcraft.command.voidcraft.voidtheif;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -40,6 +41,7 @@ public class FailCommand extends NovaSubCommand {
 				if (data.getLives() <= 2) {
 					data.setLives(1);
 					data.save();
+					player.setGameMode(GameMode.SPECTATOR);
 					player.setHealth(0);
 				} else {
 					data.setLives(data.getLives() - 2);
