@@ -20,7 +20,7 @@ public class CureCommand extends NovaSubCommand {
 		super("cure");
 
 		setAllowedSenders(AllowedSenders.ALL);
-		setPermission("voidcraft.command.voidtheif.cure");
+		setPermission("voidcraft.command.voidthief.cure");
 		setPermissionDefaultValue(PermissionDefault.OP);
 		setEmptyTabMode(true);
 		setFilterAutocomplete(true);
@@ -33,7 +33,7 @@ public class CureCommand extends NovaSubCommand {
 		} else {
 			Player player = Bukkit.getServer().getPlayer(SessionManager.getInstance().getVoidthief());
 			if (player != null) {
-				VersionIndependantUtils.get().sendTitle(player, ChatColor.GREEN + "Cured", ChatColor.GREEN + "You lost the voidtheif status", 10, 60, 10);
+				VersionIndependantUtils.get().sendTitle(player, ChatColor.GREEN + "Cured", ChatColor.GREEN + "You lost the voidthief status", 10, 60, 10);
 				VersionIndependantUtils.get().sendActionBarMessage(player, ChatColor.GREEN + "Cured");
 				player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1F, 1F);
 				PlayerData data = PlayerDataManager.getInstance().getData(player);
@@ -42,7 +42,7 @@ public class CureCommand extends NovaSubCommand {
 				VoidCraftManager.getInstance().updatePlayer(player);
 			}
 			SessionManager.getInstance().setVoidTheif(null);
-			sender.sendMessage(ChatColor.GREEN + "Voidtheif cured");
+			sender.sendMessage(ChatColor.GREEN + "Voidthief cured");
 		}
 		return true;
 	}

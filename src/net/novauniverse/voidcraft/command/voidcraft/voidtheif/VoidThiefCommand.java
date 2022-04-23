@@ -11,9 +11,9 @@ import net.novauniverse.voidcraft.modules.SessionManager;
 import net.zeeraa.novacore.spigot.command.AllowedSenders;
 import net.zeeraa.novacore.spigot.command.NovaCommand;
 
-public class VoidTheifCommand extends NovaCommand {
-	public VoidTheifCommand() {
-		super("voidtheif", VoidCraft.getInstance());
+public class VoidThiefCommand extends NovaCommand {
+	public VoidThiefCommand() {
+		super("voidthief", VoidCraft.getInstance());
 
 		addSubCommand(new FailCommand());
 		addSubCommand(new CureCommand());
@@ -21,7 +21,7 @@ public class VoidTheifCommand extends NovaCommand {
 		addHelpSubCommand();
 
 		setAllowedSenders(AllowedSenders.ALL);
-		setPermission("voidcraft.command.voidtheif.fail");
+		setPermission("voidcraft.command.voidthief.fail");
 		setPermissionDefaultValue(PermissionDefault.OP);
 		setEmptyTabMode(true);
 		setFilterAutocomplete(true);
@@ -30,10 +30,10 @@ public class VoidTheifCommand extends NovaCommand {
 	@Override
 	public boolean execute(CommandSender sender, String commandLabel, String[] args) {
 		if (SessionManager.getInstance().getVoidthief() == null) {
-			sender.sendMessage(ChatColor.RED + "No active voidtheif");
+			sender.sendMessage(ChatColor.RED + "No active voidthief");
 		} else {
 			OfflinePlayer player = Bukkit.getServer().getOfflinePlayer(SessionManager.getInstance().getVoidthief());
-			sender.sendMessage(ChatColor.GREEN + player.getName() + " is the voidtheif");
+			sender.sendMessage(ChatColor.GREEN + player.getName() + " is the voidthief");
 		}
 		return true;
 	}

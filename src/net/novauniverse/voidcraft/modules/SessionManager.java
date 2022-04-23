@@ -79,7 +79,7 @@ public class SessionManager extends NovaModule {
 				if (voidthief != null) {
 					Player voidtheifPlayer = Bukkit.getPlayer(voidthief);
 					if (voidtheifPlayer != null) {
-						TextComponent component = new TextComponent("Voidtheif");
+						TextComponent component = new TextComponent("Voidthief");
 						component.setColor(ChatColor.of("#063931"));
 						voidtheifPlayer.spigot().sendMessage(ChatMessageType.ACTION_BAR, component);
 					}

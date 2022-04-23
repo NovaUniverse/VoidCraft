@@ -23,6 +23,7 @@ public class VoidcraftCommand extends NovaCommand {
 		addSubCommand(new EndSession());
 		addSubCommand(new SetTimeLeft());
 		addSubCommand(new GiveLootBox());
+		addSubCommand(new SetLives());
 
 		addHelpSubCommand();
 	}

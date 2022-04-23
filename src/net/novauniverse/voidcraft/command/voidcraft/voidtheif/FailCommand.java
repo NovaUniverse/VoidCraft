@@ -21,7 +21,7 @@ public class FailCommand extends NovaSubCommand {
 		super("fail");
 
 		setAllowedSenders(AllowedSenders.ALL);
-		setPermission("voidcraft.command.voidtheif.fail");
+		setPermission("voidcraft.command.voidthief.fail");
 		setPermissionDefaultValue(PermissionDefault.OP);
 		setEmptyTabMode(true);
 		setFilterAutocomplete(true);
@@ -51,7 +51,7 @@ public class FailCommand extends NovaSubCommand {
 				data.save();
 			}
 			SessionManager.getInstance().setVoidTheif(null);
-			sender.sendMessage(ChatColor.GREEN + "Voidtheif cured");
+			sender.sendMessage(ChatColor.GREEN + "Voidthief cured");
 		}
 		return true;
 	}
