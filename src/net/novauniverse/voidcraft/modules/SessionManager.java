@@ -20,7 +20,6 @@ import net.novauniverse.voidcraft.VoidCraft;
 import net.novauniverse.voidcraft.customitems.VoidCraftLootBox;
 import net.zeeraa.novacore.commons.log.Log;
 import net.zeeraa.novacore.commons.tasks.Task;
-import net.zeeraa.novacore.commons.utils.TextUtils;
 import net.zeeraa.novacore.spigot.abstraction.VersionIndependantUtils;
 import net.zeeraa.novacore.spigot.abstraction.enums.VersionIndependantSound;
 import net.zeeraa.novacore.spigot.module.NovaModule;
@@ -156,8 +155,14 @@ public class SessionManager extends NovaModule {
 
 	public void updateScoreboard() {
 		if (sessionActive) {
-			//Log.trace("timeLeft: " + timeLeft);
-			NetherBoardScoreboard.getInstance().setGlobalLine(1, ChatColor.GOLD + "Time left: " + ChatColor.AQUA + TextUtils.formatTimeToHMS(timeLeft));
+			// Log.trace("timeLeft: " + timeLeft);
+			
+			long hours = timeLeft / 3600;
+			long minutes = (timeLeft % 3600) / 60;
+			long seconds = timeLeft % 60;
+
+			String timeString = String.format("%02d:%02d:%02d", hours, minutes, seconds);
+			NetherBoardScoreboard.getInstance().setGlobalLine(1, ChatColor.GOLD + "Time left: " + ChatColor.AQUA + timeString);
 		} else {
 			NetherBoardScoreboard.getInstance().setGlobalLine(1, ChatColor.RED + "Session not active");
 		}
