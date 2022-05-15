@@ -25,5 +25,8 @@ public class LootBoxContent {
 		LOOTBOX_CONTENT.add(new ItemBuilder(Material.CARROT).setAmount(1).build());
 		LOOTBOX_CONTENT.add(new ItemBuilder(Material.TNT).setAmount(2).build());
 		LOOTBOX_CONTENT.add(new ItemBuilder(Material.SUGAR_CANE).setAmount(6).build());
+		LOOTBOX_CONTENT.add(new ItemBuilder(Material.IRON_INGOT).setAmount(16).build());
+		LOOTBOX_CONTENT.add(new ItemBuilder(Material.NETHER_WART).setAmount(2).build());
+		LOOTBOX_CONTENT.add(new ItemBuilder(Material.BLAZE_ROD).setAmount(2).build());
 	}
 }
