@@ -11,7 +11,7 @@ import net.novauniverse.voidcraft.modules.SessionManager;
 import net.novauniverse.voidcraft.modules.VoidCraftManager;
 import net.novauniverse.voidcraft.playerdata.PlayerData;
 import net.novauniverse.voidcraft.playerdata.PlayerDataManager;
-import net.zeeraa.novacore.spigot.abstraction.VersionIndependantUtils;
+import net.zeeraa.novacore.spigot.abstraction.VersionIndependentUtils;
 import net.zeeraa.novacore.spigot.command.AllowedSenders;
 import net.zeeraa.novacore.spigot.command.NovaSubCommand;
 
@@ -33,8 +33,8 @@ public class CureCommand extends NovaSubCommand {
 		} else {
 			Player player = Bukkit.getServer().getPlayer(SessionManager.getInstance().getVoidthief());
 			if (player != null) {
-				VersionIndependantUtils.get().sendTitle(player, ChatColor.GREEN + "Cured", ChatColor.GREEN + "You lost the voidthief status", 10, 60, 10);
-				VersionIndependantUtils.get().sendActionBarMessage(player, ChatColor.GREEN + "Cured");
+				VersionIndependentUtils.get().sendTitle(player, ChatColor.GREEN + "Cured", ChatColor.GREEN + "You lost the voidthief status", 10, 60, 10);
+				VersionIndependentUtils.get().sendActionBarMessage(player, ChatColor.GREEN + "Cured");
 				player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1F, 1F);
 				PlayerData data = PlayerDataManager.getInstance().getData(player);
 				data.setLives(data.getLives() + 1);

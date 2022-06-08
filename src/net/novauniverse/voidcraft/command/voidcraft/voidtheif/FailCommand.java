@@ -12,7 +12,7 @@ import net.novauniverse.voidcraft.modules.SessionManager;
 import net.novauniverse.voidcraft.modules.VoidCraftManager;
 import net.novauniverse.voidcraft.playerdata.PlayerData;
 import net.novauniverse.voidcraft.playerdata.PlayerDataManager;
-import net.zeeraa.novacore.spigot.abstraction.VersionIndependantUtils;
+import net.zeeraa.novacore.spigot.abstraction.VersionIndependentUtils;
 import net.zeeraa.novacore.spigot.command.AllowedSenders;
 import net.zeeraa.novacore.spigot.command.NovaSubCommand;
 
@@ -34,8 +34,8 @@ public class FailCommand extends NovaSubCommand {
 		} else {
 			Player player = Bukkit.getServer().getPlayer(SessionManager.getInstance().getVoidthief());
 			if (player != null) {
-				VersionIndependantUtils.get().sendTitle(player, ChatColor.RED + "Failed", ChatColor.RED + "You did not manage to kill a player", 10, 60, 10);
-				VersionIndependantUtils.get().sendActionBarMessage(player, ChatColor.RED + "Failed");
+				VersionIndependentUtils.get().sendTitle(player, ChatColor.RED + "Failed", ChatColor.RED + "You did not manage to kill a player", 10, 60, 10);
+				VersionIndependentUtils.get().sendActionBarMessage(player, ChatColor.RED + "Failed");
 				player.playSound(player.getLocation(), Sound.ENTITY_WITHER_HURT, 1F, 1F);
 				PlayerData data = PlayerDataManager.getInstance().getData(player);
 				if (data.getLives() <= 2) {

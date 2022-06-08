@@ -20,8 +20,8 @@ import net.novauniverse.voidcraft.VoidCraft;
 import net.novauniverse.voidcraft.customitems.VoidCraftLootBox;
 import net.zeeraa.novacore.commons.log.Log;
 import net.zeeraa.novacore.commons.tasks.Task;
-import net.zeeraa.novacore.spigot.abstraction.VersionIndependantUtils;
-import net.zeeraa.novacore.spigot.abstraction.enums.VersionIndependantSound;
+import net.zeeraa.novacore.spigot.abstraction.VersionIndependentUtils;
+import net.zeeraa.novacore.spigot.abstraction.enums.VersionIndependentSound;
 import net.zeeraa.novacore.spigot.module.NovaModule;
 import net.zeeraa.novacore.spigot.module.modules.customitems.CustomItemManager;
 import net.zeeraa.novacore.spigot.module.modules.scoreboard.NetherBoardScoreboard;
@@ -71,7 +71,7 @@ public class SessionManager extends NovaModule {
 					Task.tryStopTask(countdownTask);
 					updateScoreboard();
 					Bukkit.getServer().broadcastMessage(ChatColor.GREEN + "" + ChatColor.AQUA + "Session ended");
-					Bukkit.getServer().getOnlinePlayers().forEach(player -> VersionIndependantSound.NOTE_PLING.play(player));
+					Bukkit.getServer().getOnlinePlayers().forEach(player -> VersionIndependentSound.NOTE_PLING.play(player));
 					return;
 				}
 
@@ -101,13 +101,13 @@ public class SessionManager extends NovaModule {
 
 				if (timeLeft == 60 * 10) {
 					Bukkit.getServer().broadcastMessage(ChatColor.GOLD + "" + ChatColor.AQUA + "10 Minutes left");
-					Bukkit.getServer().getOnlinePlayers().forEach(player -> VersionIndependantSound.NOTE_PLING.play(player));
+					Bukkit.getServer().getOnlinePlayers().forEach(player -> VersionIndependentSound.NOTE_PLING.play(player));
 				}
 
 				if (timeLeft == 60 * 5) {
 					Bukkit.getServer().broadcastMessage(ChatColor.GOLD + "" + ChatColor.AQUA + "5 Minutes left");
 					Bukkit.getServer().getOnlinePlayers().forEach(player -> {
-						VersionIndependantSound.NOTE_PLING.play(player);
+						VersionIndependentSound.NOTE_PLING.play(player);
 						if (player.getGameMode() != GameMode.SPECTATOR) {
 							ItemStack item = CustomItemManager.getInstance().getCustomItemStack(VoidCraftLootBox.class, player);
 							if (player.getInventory().addItem(item).size() > 0) {
@@ -134,7 +134,7 @@ public class SessionManager extends NovaModule {
 
 		this.voidthief = player.getUniqueId();
 		player.playSound(player, Sound.BLOCK_AMETHYST_BLOCK_BREAK, 2F, 0.5F);
-		VersionIndependantUtils.get().sendTitle(player, ChatColor.RED + "Voidthief", ChatColor.RED + "You became the voidthief", 10, 60, 10);
+		VersionIndependentUtils.get().sendTitle(player, ChatColor.RED + "Voidthief", ChatColor.RED + "You became the voidthief", 10, 60, 10);
 	}
 
 	public UUID getVoidthief() {
@@ -173,7 +173,7 @@ public class SessionManager extends NovaModule {
 		this.updateScoreboard();
 
 		Bukkit.getServer().broadcastMessage(ChatColor.GREEN + "" + ChatColor.AQUA + "Session started");
-		Bukkit.getServer().getOnlinePlayers().forEach(player -> VersionIndependantSound.NOTE_PLING.play(player));
+		Bukkit.getServer().getOnlinePlayers().forEach(player -> VersionIndependentSound.NOTE_PLING.play(player));
 
 		sessionActive = true;
 		Task.tryStartTask(countdownTask);
